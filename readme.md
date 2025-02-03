@@ -1,6 +1,8 @@
 # Auto click
 Most simple autoclick
 
+![preview](.ksinf/preview.png)
+
 ## Installation
 1. [Install](https://github.com/kerogs/autoclick/releases/latest) and run the installer
 2. You can use it!
