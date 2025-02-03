@@ -3,14 +3,27 @@ import threading
 from pynput.mouse import Controller, Button
 from pynput.keyboard import Listener, KeyCode
 from colorama import Fore, init
-import os
+import configparser
 
 init(autoreset=True)
+config = configparser.ConfigParser()
+config.read('config.ini')
 
-TOGGLE_LEFT = KeyCode(char='t')
-TOGGLE_RIGHT = KeyCode(char='y')
-TOGGLE_BOTH = KeyCode(char='u')
-TOGGLE_BOTH_INTERVAL = KeyCode(char='i')
+# ? KEYS
+TOGGLE_LEFT = KeyCode(char=config['KEYS']['TOGGLE_LEFT'])
+TOGGLE_RIGHT = KeyCode(char=config['KEYS']['TOGGLE_RIGHT'])
+TOGGLE_BOTH = KeyCode(char=config['KEYS']['TOGGLE_BOTH'])
+TOGGLE_BOTH_INTERVAL = KeyCode(char=config['KEYS']['TOGGLE_BOTH_INTERVAL'])
+# ? DELAY
+CLICK_PER_SECOND = int(config['CLICK']['CLICK_PER_SECOND'])
+CLICK_DELAY = 1 / CLICK_PER_SECOND
+CLICK_BOTH_DELAY = float(config['CLICK']['CLICK_BOTH_DELAY'])
+
+
+# TOGGLE_LEFT = KeyCode(char='t')
+# TOGGLE_RIGHT = KeyCode(char='y')
+# TOGGLE_BOTH = KeyCode(char='u')
+# TOGGLE_BOTH_INTERVAL = KeyCode(char='i')
 
 clicking_left = False
 clicking_right = False
@@ -21,15 +34,15 @@ mouse = Controller()
 print(f"{Fore.YELLOW}=====================")
 print(f"{Fore.YELLOW}AUTO CLICKER")
 print(f"{Fore.YELLOW}Created by : Kerogs")
-print(f"{Fore.YELLOW}Version : 0.2.0")
-print(f"{Fore.YELLOW}Github : https://github.com/Kerogs/AutoClick")
+print(f"{Fore.YELLOW}Version : 1.0.0")
+print(f"{Fore.YELLOW}Github : https://github.com/kerogs/autoclick")
 print(f"{Fore.YELLOW}=====================")
 print("")
-print(f"{Fore.GREEN}Press {Fore.YELLOW}'t' {Fore.GREEN}to toggle left click")
-print(f"{Fore.GREEN}Press {Fore.YELLOW}'y' {Fore.GREEN}to toggle right click")
-print(f"{Fore.GREEN}Press {Fore.YELLOW}'u' {Fore.GREEN}to toggle both clicks")
-print(f"{Fore.GREEN}Press {Fore.YELLOW}'i' {Fore.GREEN}to toggle both clicks with interval")
-print(f"{Fore.GREEN}Click per second set to {Fore.YELLOW}100c/s (Delay : 0.01s)")
+print(f"{Fore.GREEN}Press {Fore.YELLOW}{TOGGLE_LEFT} {Fore.GREEN}to toggle left click")
+print(f"{Fore.GREEN}Press {Fore.YELLOW}{TOGGLE_RIGHT} {Fore.GREEN}to toggle right click")
+print(f"{Fore.GREEN}Press {Fore.YELLOW}{TOGGLE_BOTH} {Fore.GREEN}to toggle both clicks")
+print(f"{Fore.GREEN}Press {Fore.YELLOW}{TOGGLE_BOTH_INTERVAL} {Fore.GREEN}to toggle both clicks with interval")
+print(f"{Fore.GREEN}Click per second set to {Fore.YELLOW}{CLICK_PER_SECOND}c/s (Delay : {CLICK_DELAY}s)")
 print(f"{Fore.BLUE} Press to start...")
 
 def clear_last_line():
@@ -46,9 +59,9 @@ def clicker():
             mouse.click(Button.right, 1)
         if clicking_both_interval:
             mouse.click(Button.left, 1)
-            time.sleep(0.05)  # Petit intervalle entre les clics
+            time.sleep({CLICK_BOTH_DELAY})  # Petit intervalle entre les clics
             mouse.click(Button.right, 1)
-        time.sleep(0.01)  # Ajuster le délai selon besoin
+        time.sleep(CLICK_DELAY)  # Ajuster le délai selon besoin
 
 def toggle_event(key):
     global clicking_left, clicking_right, clicking_both, clicking_both_interval
