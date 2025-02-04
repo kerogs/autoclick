@@ -10,6 +10,7 @@ Most simple autoclick
 ## Configuration
 1. Change value in ``config.ini``. You can found it in ``C:\Program Files\KS-AutoClick``
 
+
 ### Value
 |Name|Value (default)|Description|
 |-|:-:|-|
@@ -22,6 +23,9 @@ Most simple autoclick
 
 
 ## How to use
+> [!IMPORTANT]
+> Run the application as administrator so that it runs on top of other applications.
+
 Click on one of the configured keys. This activates the desired mode. By selecting a new mode, all others will be disabled by default. To be on the safe side, if you press a key other than the one given. The auto clicker will be paused.
 
 ## Click table
